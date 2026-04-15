@@ -82,6 +82,7 @@ const Index = () => {
             research={research}
             persona={persona}
             roadmap={roadmap}
+            journeyMap={journeyMap}
             onGoToPhase={goToPhase}
           />
         )}
