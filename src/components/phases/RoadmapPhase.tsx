@@ -128,6 +128,9 @@ const RoadmapPhase = ({ brief, research, persona, roadmap, onUpdate }: RoadmapPh
         ))}
       </div>
 
+      {/* Export block */}
+      <ExportBlock brief={brief} research={research} persona={persona} roadmap={data} />
+
       {/* CTA */}
       <div className="mt-10 text-center">
         <a
@@ -139,7 +142,7 @@ const RoadmapPhase = ({ brief, research, persona, roadmap, onUpdate }: RoadmapPh
           Build with Claude <ExternalLink className="w-5 h-5" />
         </a>
         <p className="text-sm text-muted-foreground mt-3">
-          Copy your brief and roadmap, then paste them into Claude to start building your prototype.
+          Copy your export above, then paste it into Claude to start building your prototype.
         </p>
       </div>
     </PhaseWrapper>
