@@ -1,6 +1,6 @@
-import { RefreshCw, ExternalLink } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import PhaseWrapper from "../PhaseWrapper";
-import ExportBlock from "../ExportBlock";
+import PhaseFooter from "../PhaseFooter";
 import type { BriefData } from "./BriefPhase";
 import type { ResearchData } from "./ResearchPhase";
 import type { PersonaData } from "./PersonaPhase";
@@ -60,6 +60,7 @@ interface RoadmapPhaseProps {
   persona: PersonaData | null;
   roadmap: RoadmapData | null;
   onUpdate: (roadmap: RoadmapData) => void;
+  onNext: () => void;
 }
 
 const bucketConfig = [
@@ -68,7 +69,7 @@ const bucketConfig = [
   { key: "couldHave" as const, label: "Could Have (Backlog)", badge: "bg-blue-100 text-blue-700" },
 ];
 
-const RoadmapPhase = ({ brief, research, persona, roadmap, onUpdate }: RoadmapPhaseProps) => {
+const RoadmapPhase = ({ brief, research, persona, roadmap, onUpdate, onNext }: RoadmapPhaseProps) => {
   const hasData = Object.values(brief).some((v) => v.trim()) || Object.values(research).some((v) => v.trim());
   const data = roadmap || (hasData ? generateRoadmap(brief, research, persona) : null);
 
@@ -128,23 +129,7 @@ const RoadmapPhase = ({ brief, research, persona, roadmap, onUpdate }: RoadmapPh
         ))}
       </div>
 
-      {/* Export block */}
-      <ExportBlock brief={brief} research={research} persona={persona} roadmap={data} />
-
-      {/* CTA */}
-      <div className="mt-10 text-center">
-        <a
-          href="https://claude.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gold text-accent-foreground font-heading font-bold text-lg shadow-lg hover:brightness-110 transition"
-        >
-          Build with Claude <ExternalLink className="w-5 h-5" />
-        </a>
-        <p className="text-sm text-muted-foreground mt-3">
-          Copy your export above, then paste it into Claude to start building your prototype.
-        </p>
-      </div>
+      <PhaseFooter onNext={onNext} nextLabel="Review & Export" showSave={false} />
     </PhaseWrapper>
   );
 };

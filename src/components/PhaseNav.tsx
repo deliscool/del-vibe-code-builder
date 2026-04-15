@@ -8,6 +8,7 @@ const phases = [
   "Empathy Map",
   "Journey Map",
   "Roadmap",
+  "Summary",
 ];
 
 interface PhaseNavProps {
