@@ -1,6 +1,7 @@
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Camera, Search, Target } from "lucide-react";
 import PhaseWrapper from "../PhaseWrapper";
 import type { ResearchData } from "./ResearchPhase";
+import personaTemplate from "@/assets/templates/persona-template.webp";
 
 export interface PersonaData {
   name: string;
@@ -51,6 +52,19 @@ const PersonaPhase = ({ research, persona, onUpdate }: PersonaPhaseProps) => {
 
   return (
     <PhaseWrapper title="Persona Builder" subtitle="Roman Pichler format — auto-generated from your research.">
+      {/* Reference template */}
+      <div className="mb-6 rounded-xl border border-border overflow-hidden bg-card">
+        <div className="bg-muted/50 px-4 py-2 border-b border-border">
+          <p className="text-xs text-muted-foreground font-medium">📋 Reference: Roman Pichler's Persona Template</p>
+        </div>
+        <img
+          src={personaTemplate}
+          alt="Roman Pichler's Persona Template showing Picture & Name, Details, and Goal columns"
+          className="w-full max-h-[280px] object-contain"
+          loading="lazy"
+        />
+      </div>
+
       <button
         onClick={handleRegenerate}
         className="flex items-center gap-2 mb-6 px-4 py-2 rounded-lg border border-border text-muted-foreground hover:bg-muted transition text-sm"
@@ -58,32 +72,63 @@ const PersonaPhase = ({ research, persona, onUpdate }: PersonaPhaseProps) => {
         <RefreshCw className="w-4 h-4" /> Regenerate
       </button>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Column 1: Avatar & name */}
-        <div className="bg-primary rounded-xl p-6 flex flex-col items-center text-center">
-          <div className="w-20 h-20 rounded-full bg-gold flex items-center justify-center text-accent-foreground text-2xl font-heading font-bold mb-4">
-            {data.initials}
+      {/* Generated persona — Roman Pichler 3-column layout */}
+      <div className="rounded-xl border-2 border-border overflow-hidden">
+        {/* Header row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 border-b-2 border-border">
+          <div className="flex items-center gap-3 p-4 bg-muted border-b md:border-b-0 md:border-r border-border">
+            <div className="w-8 h-8 rounded-full bg-muted-foreground/20 flex items-center justify-center">
+              <Camera className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <span className="font-heading font-bold text-foreground tracking-wide uppercase text-sm">Picture & Name</span>
           </div>
-          <h3 className="text-lg font-heading font-bold text-primary-foreground">{data.displayName}</h3>
-          <p className="text-sm text-primary-foreground/70 mt-1">{data.roleInfo}</p>
+          <div className="flex items-center gap-3 p-4 bg-muted border-b md:border-b-0 md:border-r border-border">
+            <div className="w-8 h-8 rounded-full bg-muted-foreground/20 flex items-center justify-center">
+              <Search className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <span className="font-heading font-bold text-foreground tracking-wide uppercase text-sm">Details</span>
+          </div>
+          <div className="flex items-center gap-3 p-4 bg-muted">
+            <div className="w-8 h-8 rounded-full bg-muted-foreground/20 flex items-center justify-center">
+              <Target className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <span className="font-heading font-bold text-foreground tracking-wide uppercase text-sm">Goal</span>
+          </div>
         </div>
 
-        {/* Column 2: Details */}
-        <div className="bg-card rounded-xl border border-border p-6">
-          <h4 className="text-label text-muted-foreground mb-3">Details</h4>
-          <ul className="space-y-3">
-            {data.details.map((d, i) => (
-              <li key={i} className="text-sm text-foreground leading-relaxed">• {d}</li>
-            ))}
-          </ul>
-        </div>
+        {/* Content row */}
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {/* Column 1: Avatar & name */}
+          <div className="p-6 flex flex-col items-center text-center border-b md:border-b-0 md:border-r border-border">
+            <div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-3xl font-heading font-bold mb-4 shadow-md">
+              {data.initials}
+            </div>
+            <h3 className="text-xl font-heading font-bold text-foreground">{data.displayName}</h3>
+            <p className="text-sm text-muted-foreground mt-1">{data.roleInfo}</p>
+          </div>
 
-        {/* Column 3: Goal */}
-        <div className="bg-gold/10 border border-gold/20 rounded-xl p-6">
-          <h4 className="text-label text-gold-dark mb-3">Primary Goal</h4>
-          <p className="text-foreground leading-relaxed">{data.goal}</p>
+          {/* Column 2: Details */}
+          <div className="p-6 border-b md:border-b-0 md:border-r border-border">
+            <ul className="space-y-4">
+              {data.details.map((d, i) => (
+                <li key={i} className="text-sm text-foreground leading-relaxed">
+                  <span className="font-semibold">{d.split(":")[0]}:</span>
+                  {d.split(":").slice(1).join(":")}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Goal */}
+          <div className="p-6">
+            <p className="text-foreground leading-relaxed font-medium">{data.goal}</p>
+          </div>
         </div>
       </div>
+
+      <p className="text-xs text-muted-foreground mt-3 text-center italic">
+        Based on Roman Pichler's Persona Template — www.romanpichler.com
+      </p>
     </PhaseWrapper>
   );
 };
