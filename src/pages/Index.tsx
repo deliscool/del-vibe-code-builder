@@ -47,8 +47,9 @@ const Index = () => {
   const handleStart = useCallback(() => {
     setStarted(true);
     setCurrentPhase(0);
+    setTutorialSlide(0);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [setStarted, setCurrentPhase]);
+  }, [setStarted, setCurrentPhase, setTutorialSlide]);
 
   useEffect(() => {
     if (started) {
