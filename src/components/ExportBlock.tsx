@@ -4,15 +4,17 @@ import type { BriefData } from "./phases/BriefPhase";
 import type { ResearchData } from "./phases/ResearchPhase";
 import type { PersonaData } from "./phases/PersonaPhase";
 import type { RoadmapData } from "./phases/RoadmapPhase";
+import type { JourneyMapData } from "./phases/JourneyMapPhase";
 
 interface ExportBlockProps {
   brief: BriefData;
   research: ResearchData;
   persona: PersonaData | null;
   roadmap: RoadmapData | null;
+  journeyMap?: JourneyMapData | null;
 }
 
-function buildExportText(brief: BriefData, research: ResearchData, persona: PersonaData | null, roadmap: RoadmapData | null): string {
+function buildExportText(brief: BriefData, research: ResearchData, persona: PersonaData | null, roadmap: RoadmapData | null, journeyMap?: JourneyMapData | null): string {
   const sections: string[] = [];
 
   // Brief
@@ -47,7 +49,15 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
   }
 
   // Journey Map
-  if (hasResearch || Object.values(brief).some((v) => v.trim())) {
+  const jmLanes = ["Doing", "Thinking", "Feeling", "Touchpoints", "Opportunities"];
+  const jmPhases = ["Awareness", "Consideration", "Decision", "Onboarding"];
+  if (journeyMap?.cells) {
+    sections.push("\n# CUSTOMER JOURNEY MAP");
+    sections.push("Phases: " + jmPhases.join(" → "));
+    journeyMap.cells.forEach((row, li) => {
+      sections.push(`${jmLanes[li]}: ${row.join(" → ")}`);
+    });
+  } else if (hasResearch || Object.values(brief).some((v) => v.trim())) {
     const name = research.name?.split(",")[0]?.trim() || "User";
     sections.push("\n# CUSTOMER JOURNEY MAP");
     sections.push("Phases: Awareness → Consideration → Decision → Onboarding");
@@ -69,10 +79,10 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
   return sections.join("\n\n");
 }
 
-const ExportBlock = ({ brief, research, persona, roadmap }: ExportBlockProps) => {
+const ExportBlock = ({ brief, research, persona, roadmap, journeyMap }: ExportBlockProps) => {
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const text = buildExportText(brief, research, persona, roadmap);
+  const text = buildExportText(brief, research, persona, roadmap, journeyMap);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text);
