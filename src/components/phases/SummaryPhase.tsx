@@ -5,16 +5,18 @@ import type { BriefData } from "./BriefPhase";
 import type { ResearchData } from "./ResearchPhase";
 import type { PersonaData } from "./PersonaPhase";
 import type { RoadmapData } from "./RoadmapPhase";
+import type { JourneyMapData } from "./JourneyMapPhase";
 
 interface SummaryPhaseProps {
   brief: BriefData;
   research: ResearchData;
   persona: PersonaData | null;
   roadmap: RoadmapData | null;
+  journeyMap: JourneyMapData | null;
   onGoToPhase: (phase: number) => void;
 }
 
-const SummaryPhase = ({ brief, research, persona, roadmap, onGoToPhase }: SummaryPhaseProps) => {
+const SummaryPhase = ({ brief, research, persona, roadmap, journeyMap, onGoToPhase }: SummaryPhaseProps) => {
   const briefFilled = Object.values(brief).filter((v) => v.trim()).length;
   const briefTotal = Object.keys(brief).length;
   const researchFilled = Object.values(research).filter((v) => v.trim()).length;
@@ -127,7 +129,7 @@ const SummaryPhase = ({ brief, research, persona, roadmap, onGoToPhase }: Summar
       </div>
 
       {/* Export block */}
-      <ExportBlock brief={brief} research={research} persona={persona} roadmap={roadmap} />
+      <ExportBlock brief={brief} research={research} persona={persona} roadmap={roadmap} journeyMap={journeyMap} />
 
       {/* Final CTA */}
       <div className="mt-10 text-center">
