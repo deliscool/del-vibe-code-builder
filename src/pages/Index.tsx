@@ -6,7 +6,7 @@ import BriefPhase, { type BriefData } from "../components/phases/BriefPhase";
 import ResearchPhase, { type ResearchData } from "../components/phases/ResearchPhase";
 import PersonaPhase, { type PersonaData } from "../components/phases/PersonaPhase";
 import EmpathyMapPhase from "../components/phases/EmpathyMapPhase";
-import JourneyMapPhase from "../components/phases/JourneyMapPhase";
+import JourneyMapPhase, { type JourneyMapData } from "../components/phases/JourneyMapPhase";
 import RoadmapPhase, { type RoadmapData } from "../components/phases/RoadmapPhase";
 import SummaryPhase from "../components/phases/SummaryPhase";
 
@@ -20,6 +20,7 @@ const Index = () => {
   const [research, setResearch] = useLocalStorage<ResearchData>("vc-research", emptyResearch);
   const [persona, setPersona] = useLocalStorage<PersonaData | null>("vc-persona", null);
   const [roadmap, setRoadmap] = useLocalStorage<RoadmapData | null>("vc-roadmap", null);
+  const [journeyMap, setJourneyMap] = useLocalStorage<JourneyMapData | null>("vc-journeyMap", null);
 
   const completedPhases = [
     tutorialSlide === 9,
@@ -27,7 +28,7 @@ const Index = () => {
     Object.values(research).some((v) => v.trim()),
     persona !== null,
     Object.values(research).some((v) => v.trim()),
-    Object.values(brief).some((v) => v.trim()) || Object.values(research).some((v) => v.trim()),
+    journeyMap !== null,
     roadmap !== null,
     false, // Summary is never "completed" — it's the final destination
   ];
@@ -64,7 +65,7 @@ const Index = () => {
         {currentPhase === 2 && <ResearchPhase research={research} onUpdate={setResearch} onNext={() => goToPhase(3)} />}
         {currentPhase === 3 && <PersonaPhase research={research} persona={persona} onUpdate={setPersona} onNext={() => goToPhase(4)} />}
         {currentPhase === 4 && <EmpathyMapPhase research={research} onNext={() => goToPhase(5)} />}
-        {currentPhase === 5 && <JourneyMapPhase brief={brief} research={research} onNext={() => goToPhase(6)} />}
+        {currentPhase === 5 && <JourneyMapPhase brief={brief} research={research} journeyMap={journeyMap} onUpdate={setJourneyMap} onNext={() => goToPhase(6)} />}
         {currentPhase === 6 && (
           <RoadmapPhase
             brief={brief}
@@ -81,6 +82,7 @@ const Index = () => {
             research={research}
             persona={persona}
             roadmap={roadmap}
+            journeyMap={journeyMap}
             onGoToPhase={goToPhase}
           />
         )}
