@@ -8,6 +8,7 @@ import PersonaPhase, { type PersonaData } from "../components/phases/PersonaPhas
 import EmpathyMapPhase from "../components/phases/EmpathyMapPhase";
 import JourneyMapPhase from "../components/phases/JourneyMapPhase";
 import RoadmapPhase, { type RoadmapData } from "../components/phases/RoadmapPhase";
+import SummaryPhase from "../components/phases/SummaryPhase";
 
 const emptyBrief: BriefData = { summary: "", customer: "", problems: "", requirements: "", ux: "", data: "", tech: "", other: "" };
 const emptyResearch: ResearchData = { name: "", day: "", hear: "", see: "", frustrations: "", goals: "", current: "", success: "" };
@@ -28,6 +29,7 @@ const Index = () => {
     Object.values(research).some((v) => v.trim()),
     Object.values(brief).some((v) => v.trim()) || Object.values(research).some((v) => v.trim()),
     roadmap !== null,
+    false, // Summary is never "completed" — it's the final destination
   ];
 
   const goToPhase = useCallback((phase: number) => {
@@ -70,6 +72,16 @@ const Index = () => {
             persona={persona}
             roadmap={roadmap}
             onUpdate={setRoadmap}
+            onNext={() => goToPhase(7)}
+          />
+        )}
+        {currentPhase === 7 && (
+          <SummaryPhase
+            brief={brief}
+            research={research}
+            persona={persona}
+            roadmap={roadmap}
+            onGoToPhase={goToPhase}
           />
         )}
       </main>
