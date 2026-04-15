@@ -47,7 +47,7 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
     if (empathyMap.sayDo) sections.push(`Say & Do: ${empathyMap.sayDo}`);
     if (empathyMap.pains) sections.push(`Pains: ${empathyMap.pains}`);
     if (empathyMap.gains) sections.push(`Gains: ${empathyMap.gains}`);
-  } else if (hasResearch) {
+  } else if (Object.values(research).some((v) => v.trim())) {
     sections.push("\n# EMPATHY MAP");
     if (research.frustrations) sections.push(`Think & Feel: ${research.frustrations}. Goals: ${research.goals || ""}`);
     if (research.hear) sections.push(`Hear: ${research.hear}`);
@@ -66,7 +66,7 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
     journeyMap.cells.forEach((row, li) => {
       sections.push(`${jmLanes[li]}: ${row.join(" → ")}`);
     });
-  } else if (hasResearch || Object.values(brief).some((v) => v.trim())) {
+  } else if (Object.values(research).some((v) => v.trim()) || Object.values(brief).some((v) => v.trim())) {
     const name = research.name?.split(",")[0]?.trim() || "User";
     sections.push("\n# CUSTOMER JOURNEY MAP");
     sections.push("Phases: Awareness → Consideration → Decision → Onboarding");
