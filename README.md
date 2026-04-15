@@ -1,5 +1,7 @@
 # Del Vibe Code Builder
 
+deployed on https://main.d2rvryqqmh4ev8.amplifyapp.com/
+
 A guided, browser-based product planning tool that walks builders through every phase of defining a product — from brief to roadmap — and exports a full Product Requirements Document (PRD) as markdown.
 
 ---
