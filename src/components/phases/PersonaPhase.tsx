@@ -1,5 +1,6 @@
 import { RefreshCw, Camera, Search, Target } from "lucide-react";
 import PhaseWrapper from "../PhaseWrapper";
+import PhaseFooter from "../PhaseFooter";
 import type { ResearchData } from "./ResearchPhase";
 import personaTemplate from "@/assets/templates/persona-template.webp";
 
@@ -30,9 +31,10 @@ interface PersonaPhaseProps {
   research: ResearchData;
   persona: PersonaData | null;
   onUpdate: (persona: PersonaData) => void;
+  onNext: () => void;
 }
 
-const PersonaPhase = ({ research, persona, onUpdate }: PersonaPhaseProps) => {
+const PersonaPhase = ({ research, persona, onUpdate, onNext }: PersonaPhaseProps) => {
   const hasResearch = Object.values(research).some((v) => v.trim());
   const data = persona || (hasResearch ? generatePersona(research) : null);
 
@@ -129,6 +131,7 @@ const PersonaPhase = ({ research, persona, onUpdate }: PersonaPhaseProps) => {
       <p className="text-xs text-muted-foreground mt-3 text-center italic">
         Based on Roman Pichler's Persona Template — www.romanpichler.com
       </p>
+      <PhaseFooter onNext={onNext} nextLabel="Continue to Empathy Map" showSave={false} />
     </PhaseWrapper>
   );
 };

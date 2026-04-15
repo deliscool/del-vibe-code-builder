@@ -30,9 +30,13 @@ const Index = () => {
     roadmap !== null,
   ];
 
-  const handleTutorialComplete = useCallback(() => {
-    setCurrentPhase(1);
+  const goToPhase = useCallback((phase: number) => {
+    setCurrentPhase(phase);
   }, [setCurrentPhase]);
+
+  const handleTutorialComplete = useCallback(() => {
+    goToPhase(1);
+  }, [goToPhase]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -54,11 +58,11 @@ const Index = () => {
             onComplete={handleTutorialComplete}
           />
         )}
-        {currentPhase === 1 && <BriefPhase brief={brief} onUpdate={setBrief} />}
-        {currentPhase === 2 && <ResearchPhase research={research} onUpdate={setResearch} />}
-        {currentPhase === 3 && <PersonaPhase research={research} persona={persona} onUpdate={setPersona} />}
-        {currentPhase === 4 && <EmpathyMapPhase research={research} />}
-        {currentPhase === 5 && <JourneyMapPhase brief={brief} research={research} />}
+        {currentPhase === 1 && <BriefPhase brief={brief} onUpdate={setBrief} onNext={() => goToPhase(2)} />}
+        {currentPhase === 2 && <ResearchPhase research={research} onUpdate={setResearch} onNext={() => goToPhase(3)} />}
+        {currentPhase === 3 && <PersonaPhase research={research} persona={persona} onUpdate={setPersona} onNext={() => goToPhase(4)} />}
+        {currentPhase === 4 && <EmpathyMapPhase research={research} onNext={() => goToPhase(5)} />}
+        {currentPhase === 5 && <JourneyMapPhase brief={brief} research={research} onNext={() => goToPhase(6)} />}
         {currentPhase === 6 && (
           <RoadmapPhase
             brief={brief}

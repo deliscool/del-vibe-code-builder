@@ -1,5 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import PhaseWrapper from "../PhaseWrapper";
+import PhaseFooter from "../PhaseFooter";
 import type { ResearchData } from "./ResearchPhase";
 import empathyMapTemplate from "@/assets/templates/empathy-map-template.jpg";
 
@@ -22,9 +23,10 @@ function generateQuadrants(r: ResearchData): Quadrant[] {
 
 interface EmpathyMapPhaseProps {
   research: ResearchData;
+  onNext: () => void;
 }
 
-const EmpathyMapPhase = ({ research }: EmpathyMapPhaseProps) => {
+const EmpathyMapPhase = ({ research, onNext }: EmpathyMapPhaseProps) => {
   const hasResearch = Object.values(research).some((v) => v.trim());
   const quadrants = generateQuadrants(research);
 
@@ -66,6 +68,7 @@ const EmpathyMapPhase = ({ research }: EmpathyMapPhaseProps) => {
       <p className="text-xs text-muted-foreground mt-3 text-center italic">
         Based on Toolshero Empathy Map — www.toolshero.com
       </p>
+      <PhaseFooter onNext={onNext} nextLabel="Continue to Journey Map" showSave={false} />
     </PhaseWrapper>
   );
 };

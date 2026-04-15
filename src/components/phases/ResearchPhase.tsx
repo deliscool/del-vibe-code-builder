@@ -1,4 +1,5 @@
 import PhaseWrapper from "../PhaseWrapper";
+import PhaseFooter from "../PhaseFooter";
 import AutoSaveField from "../AutoSaveField";
 
 export interface ResearchData {
@@ -26,9 +27,10 @@ const questions: { key: keyof ResearchData; label: string; placeholder: string }
 interface ResearchPhaseProps {
   research: ResearchData;
   onUpdate: (research: ResearchData) => void;
+  onNext: () => void;
 }
 
-const ResearchPhase = ({ research, onUpdate }: ResearchPhaseProps) => (
+const ResearchPhase = ({ research, onUpdate, onNext }: ResearchPhaseProps) => (
   <PhaseWrapper
     title="Market Research"
     subtitle="Answer these 8 questions about your target user. Your answers will power the persona, empathy map, and journey map."
@@ -46,6 +48,7 @@ const ResearchPhase = ({ research, onUpdate }: ResearchPhaseProps) => (
         />
       ))}
     </div>
+    <PhaseFooter onNext={onNext} nextLabel="Continue to Persona" />
   </PhaseWrapper>
 );
 

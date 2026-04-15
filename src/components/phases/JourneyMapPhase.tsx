@@ -1,4 +1,5 @@
 import PhaseWrapper from "../PhaseWrapper";
+import PhaseFooter from "../PhaseFooter";
 import type { ResearchData } from "./ResearchPhase";
 import type { BriefData } from "./BriefPhase";
 import journeyMapTemplate from "@/assets/templates/journey-map-template.jpg";
@@ -51,9 +52,10 @@ function generateMap(brief: BriefData, research: ResearchData): string[][] {
 interface JourneyMapPhaseProps {
   brief: BriefData;
   research: ResearchData;
+  onNext: () => void;
 }
 
-const JourneyMapPhase = ({ brief, research }: JourneyMapPhaseProps) => {
+const JourneyMapPhase = ({ brief, research, onNext }: JourneyMapPhaseProps) => {
   const hasData = Object.values(research).some((v) => v.trim()) || Object.values(brief).some((v) => v.trim());
   const map = generateMap(brief, research);
 
@@ -130,6 +132,7 @@ const JourneyMapPhase = ({ brief, research }: JourneyMapPhaseProps) => {
       <p className="text-xs text-muted-foreground mt-3 text-center italic">
         Based on ServiceNow Customer Journey Mapping Guide — www.servicenow.com
       </p>
+      <PhaseFooter onNext={onNext} nextLabel="Continue to Roadmap" showSave={false} />
     </PhaseWrapper>
   );
 };
