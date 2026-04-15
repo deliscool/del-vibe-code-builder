@@ -88,10 +88,10 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
   return sections.join("\n\n");
 }
 
-const ExportBlock = ({ brief, research, persona, roadmap, journeyMap }: ExportBlockProps) => {
+const ExportBlock = ({ brief, research, persona, roadmap, journeyMap, empathyMap }: ExportBlockProps) => {
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const text = buildExportText(brief, research, persona, roadmap, journeyMap);
+  const text = buildExportText(brief, research, persona, roadmap, journeyMap, empathyMap);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text);
