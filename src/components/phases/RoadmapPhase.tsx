@@ -1,5 +1,6 @@
 import { RefreshCw, ExternalLink } from "lucide-react";
 import PhaseWrapper from "../PhaseWrapper";
+import ExportBlock from "../ExportBlock";
 import type { BriefData } from "./BriefPhase";
 import type { ResearchData } from "./ResearchPhase";
 import type { PersonaData } from "./PersonaPhase";
