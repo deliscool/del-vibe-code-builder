@@ -5,6 +5,7 @@ import type { ResearchData } from "./phases/ResearchPhase";
 import type { PersonaData } from "./phases/PersonaPhase";
 import type { RoadmapData } from "./phases/RoadmapPhase";
 import type { JourneyMapData } from "./phases/JourneyMapPhase";
+import type { EmpathyMapData } from "./phases/EmpathyMapPhase";
 
 interface ExportBlockProps {
   brief: BriefData;
@@ -12,9 +13,10 @@ interface ExportBlockProps {
   persona: PersonaData | null;
   roadmap: RoadmapData | null;
   journeyMap?: JourneyMapData | null;
+  empathyMap?: EmpathyMapData | null;
 }
 
-function buildExportText(brief: BriefData, research: ResearchData, persona: PersonaData | null, roadmap: RoadmapData | null, journeyMap?: JourneyMapData | null): string {
+function buildExportText(brief: BriefData, research: ResearchData, persona: PersonaData | null, roadmap: RoadmapData | null, journeyMap?: JourneyMapData | null, empathyMap?: EmpathyMapData | null): string {
   const sections: string[] = [];
 
   // Brief
@@ -37,8 +39,15 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
   }
 
   // Empathy Map
-  const hasResearch = Object.values(research).some((v) => v.trim());
-  if (hasResearch) {
+  if (empathyMap) {
+    sections.push("\n# EMPATHY MAP");
+    if (empathyMap.thinkFeel) sections.push(`Think & Feel: ${empathyMap.thinkFeel}`);
+    if (empathyMap.hear) sections.push(`Hear: ${empathyMap.hear}`);
+    if (empathyMap.see) sections.push(`See: ${empathyMap.see}`);
+    if (empathyMap.sayDo) sections.push(`Say & Do: ${empathyMap.sayDo}`);
+    if (empathyMap.pains) sections.push(`Pains: ${empathyMap.pains}`);
+    if (empathyMap.gains) sections.push(`Gains: ${empathyMap.gains}`);
+  } else if (Object.values(research).some((v) => v.trim())) {
     sections.push("\n# EMPATHY MAP");
     if (research.frustrations) sections.push(`Think & Feel: ${research.frustrations}. Goals: ${research.goals || ""}`);
     if (research.hear) sections.push(`Hear: ${research.hear}`);
@@ -57,7 +66,7 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
     journeyMap.cells.forEach((row, li) => {
       sections.push(`${jmLanes[li]}: ${row.join(" → ")}`);
     });
-  } else if (hasResearch || Object.values(brief).some((v) => v.trim())) {
+  } else if (Object.values(research).some((v) => v.trim()) || Object.values(brief).some((v) => v.trim())) {
     const name = research.name?.split(",")[0]?.trim() || "User";
     sections.push("\n# CUSTOMER JOURNEY MAP");
     sections.push("Phases: Awareness → Consideration → Decision → Onboarding");
@@ -79,10 +88,10 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
   return sections.join("\n\n");
 }
 
-const ExportBlock = ({ brief, research, persona, roadmap, journeyMap }: ExportBlockProps) => {
+const ExportBlock = ({ brief, research, persona, roadmap, journeyMap, empathyMap }: ExportBlockProps) => {
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const text = buildExportText(brief, research, persona, roadmap, journeyMap);
+  const text = buildExportText(brief, research, persona, roadmap, journeyMap, empathyMap);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text);

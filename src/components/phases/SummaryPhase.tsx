@@ -6,6 +6,7 @@ import type { ResearchData } from "./ResearchPhase";
 import type { PersonaData } from "./PersonaPhase";
 import type { RoadmapData } from "./RoadmapPhase";
 import type { JourneyMapData } from "./JourneyMapPhase";
+import type { EmpathyMapData } from "./EmpathyMapPhase";
 
 interface SummaryPhaseProps {
   brief: BriefData;
@@ -13,10 +14,11 @@ interface SummaryPhaseProps {
   persona: PersonaData | null;
   roadmap: RoadmapData | null;
   journeyMap: JourneyMapData | null;
+  empathyMap: EmpathyMapData | null;
   onGoToPhase: (phase: number) => void;
 }
 
-const SummaryPhase = ({ brief, research, persona, roadmap, journeyMap, onGoToPhase }: SummaryPhaseProps) => {
+const SummaryPhase = ({ brief, research, persona, roadmap, journeyMap, empathyMap, onGoToPhase }: SummaryPhaseProps) => {
   const briefFilled = Object.values(brief).filter((v) => v.trim()).length;
   const briefTotal = Object.keys(brief).length;
   const researchFilled = Object.values(research).filter((v) => v.trim()).length;
@@ -52,9 +54,9 @@ const SummaryPhase = ({ brief, research, persona, roadmap, journeyMap, onGoToPha
     {
       label: "Empathy Map",
       phase: 4,
-      complete: hasResearch,
-      detail: hasResearch ? "6 quadrants generated" : "Needs research data",
-      preview: research.frustrations ? `Pains: ${research.frustrations.slice(0, 80)}` : null,
+      complete: empathyMap !== null,
+      detail: empathyMap !== null ? "6 quadrants customized" : hasResearch ? "6 quadrants auto-generated" : "Needs research data",
+      preview: empathyMap?.pains ? `Pains: ${empathyMap.pains.slice(0, 80)}` : research.frustrations ? `Pains: ${research.frustrations.slice(0, 80)}` : null,
     },
     {
       label: "Journey Map",
@@ -129,7 +131,7 @@ const SummaryPhase = ({ brief, research, persona, roadmap, journeyMap, onGoToPha
       </div>
 
       {/* Export block */}
-      <ExportBlock brief={brief} research={research} persona={persona} roadmap={roadmap} journeyMap={journeyMap} />
+      <ExportBlock brief={brief} research={research} persona={persona} roadmap={roadmap} journeyMap={journeyMap} empathyMap={empathyMap} />
 
       {/* Final CTA */}
       <div className="mt-10 text-center">
