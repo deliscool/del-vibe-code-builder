@@ -83,6 +83,9 @@ function buildExportText(brief: BriefData, research: ResearchData, persona: Pers
     if (roadmap.mustHave.length) sections.push(`## Must Have (MVP)\n${roadmap.mustHave.map((s) => `- ${s}`).join("\n")}`);
     if (roadmap.shouldHave.length) sections.push(`## Should Have (v1.1)\n${roadmap.shouldHave.map((s) => `- ${s}`).join("\n")}`);
     if (roadmap.couldHave.length) sections.push(`## Could Have (Backlog)\n${roadmap.couldHave.map((s) => `- ${s}`).join("\n")}`);
+    if (roadmap.epics?.length) {
+      sections.push(`\n## Epics / Features\n${roadmap.epics.map((e) => `### ${e.name}\n${e.stories.map((s) => `- ${s}`).join("\n")}`).join("\n\n")}`);
+    }
   }
 
   return sections.join("\n\n");
