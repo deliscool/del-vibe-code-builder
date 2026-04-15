@@ -1,6 +1,7 @@
 import { RefreshCw } from "lucide-react";
 import PhaseWrapper from "../PhaseWrapper";
 import type { ResearchData } from "./ResearchPhase";
+import empathyMapTemplate from "@/assets/templates/empathy-map-template.jpg";
 
 interface Quadrant {
   label: string;
@@ -39,6 +40,20 @@ const EmpathyMapPhase = ({ research }: EmpathyMapPhaseProps) => {
 
   return (
     <PhaseWrapper title="Empathy Map" subtitle="Toolshero 6-quadrant format — auto-generated from your research.">
+      {/* Reference template */}
+      <div className="mb-6 rounded-xl border border-border overflow-hidden bg-card">
+        <div className="bg-muted/50 px-4 py-2 border-b border-border">
+          <p className="text-xs text-muted-foreground font-medium">📋 Reference: Toolshero Empathy Map Template</p>
+        </div>
+        <img
+          src={empathyMapTemplate}
+          alt="Toolshero Empathy Map showing Think & Feel, Hear, See, Say & Do, Pains, and Gains quadrants"
+          className="w-full max-h-[300px] object-contain bg-white"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Generated empathy map */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {quadrants.map((q) => (
           <div key={q.label} className={`rounded-xl border p-5 ${q.color}`}>
@@ -47,6 +62,10 @@ const EmpathyMapPhase = ({ research }: EmpathyMapPhaseProps) => {
           </div>
         ))}
       </div>
+
+      <p className="text-xs text-muted-foreground mt-3 text-center italic">
+        Based on Toolshero Empathy Map — www.toolshero.com
+      </p>
     </PhaseWrapper>
   );
 };

@@ -21,7 +21,7 @@ const Index = () => {
   const [roadmap, setRoadmap] = useLocalStorage<RoadmapData | null>("vc-roadmap", null);
 
   const completedPhases = [
-    tutorialSlide === 6,
+    tutorialSlide === 9,
     Object.values(brief).some((v) => v.trim()),
     Object.values(research).some((v) => v.trim()),
     persona !== null,

@@ -1,6 +1,8 @@
 import PhaseWrapper from "../PhaseWrapper";
 import type { ResearchData } from "./ResearchPhase";
 import type { BriefData } from "./BriefPhase";
+import journeyMapTemplate from "@/assets/templates/journey-map-template.jpg";
+import journeyMapLanes from "@/assets/templates/journey-map-lanes.jpg";
 
 const phaseLabels = ["Awareness", "Consideration", "Decision", "Onboarding"];
 const lanes = ["Doing", "Thinking", "Feeling", "Touchpoints", "Opportunities"];
@@ -66,7 +68,34 @@ const JourneyMapPhase = ({ brief, research }: JourneyMapPhaseProps) => {
   }
 
   return (
-    <PhaseWrapper title="Customer Journey Map" subtitle="5-lane swim lane format across 4 phases.">
+    <PhaseWrapper title="Customer Journey Map" subtitle="ServiceNow 5-lane swim lane format across 4 phases.">
+      {/* Reference templates */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="rounded-xl border border-border overflow-hidden bg-card">
+          <div className="bg-muted/50 px-4 py-2 border-b border-border">
+            <p className="text-xs text-muted-foreground font-medium">📋 Reference: ServiceNow 5-Lane Swim Lanes</p>
+          </div>
+          <img
+            src={journeyMapLanes}
+            alt="ServiceNow journey mapping 5 swim lanes: Doing, Thinking, Feeling, Touchpoints, Opportunities"
+            className="w-full max-h-[220px] object-contain"
+            loading="lazy"
+          />
+        </div>
+        <div className="rounded-xl border border-border overflow-hidden bg-card">
+          <div className="bg-muted/50 px-4 py-2 border-b border-border">
+            <p className="text-xs text-muted-foreground font-medium">📋 Reference: ServiceNow Journey Map Visualization</p>
+          </div>
+          <img
+            src={journeyMapTemplate}
+            alt="ServiceNow complete journey map visualization with actions, thoughts, feelings, and opportunities"
+            className="w-full max-h-[220px] object-contain"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      {/* Generated journey map */}
       <div className="overflow-x-auto">
         <div className="min-w-[700px]">
           {/* Header */}
@@ -97,6 +126,10 @@ const JourneyMapPhase = ({ brief, research }: JourneyMapPhaseProps) => {
           ))}
         </div>
       </div>
+
+      <p className="text-xs text-muted-foreground mt-3 text-center italic">
+        Based on ServiceNow Customer Journey Mapping Guide — www.servicenow.com
+      </p>
     </PhaseWrapper>
   );
 };
