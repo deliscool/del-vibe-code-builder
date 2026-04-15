@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import PhaseNav from "../components/PhaseNav";
+import LandingHero from "../components/LandingHero";
 import TutorialPhase from "../components/phases/TutorialPhase";
 import BriefPhase, { type BriefData } from "../components/phases/BriefPhase";
 import ResearchPhase, { type ResearchData } from "../components/phases/ResearchPhase";
@@ -14,6 +15,7 @@ const emptyBrief: BriefData = { summary: "", customer: "", problems: "", require
 const emptyResearch: ResearchData = { name: "", day: "", hear: "", see: "", frustrations: "", goals: "", current: "", success: "" };
 
 const Index = () => {
+  const [started, setStarted] = useLocalStorage("vc-started", false);
   const [currentPhase, setCurrentPhase] = useLocalStorage("vc-currentPhase", 0);
   const [tutorialSlide, setTutorialSlide] = useLocalStorage("vc-tutorialSlide", 0);
   const [brief, setBrief] = useLocalStorage<BriefData>("vc-brief", emptyBrief);
@@ -31,7 +33,7 @@ const Index = () => {
     empathyMap !== null,
     journeyMap !== null,
     roadmap !== null,
-    false, // Summary is never "completed" — it's the final destination
+    false,
   ];
 
   const goToPhase = useCallback((phase: number) => {
@@ -42,9 +44,21 @@ const Index = () => {
     goToPhase(1);
   }, [goToPhase]);
 
-  useEffect(() => {
+  const handleStart = useCallback(() => {
+    setStarted(true);
+    setCurrentPhase(0);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currentPhase]);
+  }, [setStarted, setCurrentPhase]);
+
+  useEffect(() => {
+    if (started) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [currentPhase, started]);
+
+  if (!started) {
+    return <LandingHero onStart={handleStart} />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
