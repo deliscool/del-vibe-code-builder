@@ -1,4 +1,5 @@
 import PhaseWrapper from "../PhaseWrapper";
+import PhaseFooter from "../PhaseFooter";
 import AutoSaveField from "../AutoSaveField";
 
 export interface BriefData {
@@ -26,9 +27,10 @@ const fields: { key: keyof BriefData; label: string; placeholder: string }[] = [
 interface BriefPhaseProps {
   brief: BriefData;
   onUpdate: (brief: BriefData) => void;
+  onNext: () => void;
 }
 
-const BriefPhase = ({ brief, onUpdate }: BriefPhaseProps) => (
+const BriefPhase = ({ brief, onUpdate, onNext }: BriefPhaseProps) => (
   <PhaseWrapper
     title="Product Brief"
     subtitle="Capture everything the AI needs to build your prototype. Every field auto-saves."
@@ -46,6 +48,7 @@ const BriefPhase = ({ brief, onUpdate }: BriefPhaseProps) => (
         />
       ))}
     </div>
+    <PhaseFooter onNext={onNext} nextLabel="Continue to Research" />
   </PhaseWrapper>
 );
 
