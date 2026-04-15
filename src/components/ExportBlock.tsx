@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, Download } from "lucide-react";
 import type { BriefData } from "./phases/BriefPhase";
 import type { ResearchData } from "./phases/ResearchPhase";
 import type { PersonaData } from "./phases/PersonaPhase";
@@ -80,6 +80,18 @@ const ExportBlock = ({ brief, research, persona, roadmap }: ExportBlockProps) =>
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleDownload = () => {
+    const blob = new Blob([text], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "product-requirements.md";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="mt-10 rounded-xl border-2 border-gold/30 bg-card overflow-hidden">
       <div className="flex items-center justify-between px-5 py-3 bg-gold/10 border-b border-gold/20">
@@ -90,6 +102,13 @@ const ExportBlock = ({ brief, research, persona, roadmap }: ExportBlockProps) =>
             className="text-xs px-3 py-1.5 rounded-lg border border-border text-muted-foreground hover:bg-muted transition"
           >
             {expanded ? "Collapse" : "Preview"}
+          </button>
+          <button
+            onClick={handleDownload}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg border border-border text-muted-foreground hover:bg-muted transition text-xs font-semibold"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Download .md
           </button>
           <button
             onClick={handleCopy}
