@@ -116,9 +116,9 @@ const ExportBlock = ({ brief, research, persona, roadmap, journeyMap, empathyMap
 
   return (
     <div className="mt-10 rounded-xl border-2 border-gold/30 bg-card overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3 bg-gold/10 border-b border-gold/20">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-3 bg-gold/10 border-b border-gold/20">
         <h3 className="font-heading font-bold text-foreground text-sm">📋 Export: Full Product Requirements</h3>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => setExpanded(!expanded)}
             className="text-xs px-3 py-1.5 rounded-lg border border-border text-muted-foreground hover:bg-muted transition"

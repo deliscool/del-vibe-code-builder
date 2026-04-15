@@ -128,7 +128,7 @@ const TutorialPhase = ({ currentSlide, onSlideChange, onComplete }: TutorialPhas
           </div>
         )}
 
-        <div className="p-8">
+        <div className="p-5 sm:p-8">
           <span className="text-label text-muted-foreground">
             Slide {currentSlide + 1} of {slides.length}
           </span>

@@ -104,7 +104,7 @@ const SummaryPhase = ({ brief, research, persona, roadmap, journeyMap, empathyMa
               s.complete ? "border-primary/20 bg-card" : "border-border bg-muted/30"
             }`}
           >
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
               <div className="flex items-start gap-3 flex-1 min-w-0">
                 {s.complete ? (
                   <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
@@ -121,7 +121,7 @@ const SummaryPhase = ({ brief, research, persona, roadmap, journeyMap, empathyMa
               </div>
               <button
                 onClick={() => onGoToPhase(s.phase)}
-                className="text-xs px-3 py-1.5 rounded-lg border border-border text-muted-foreground hover:bg-muted transition shrink-0"
+                className="text-xs px-3 py-1.5 rounded-lg border border-border text-muted-foreground hover:bg-muted transition shrink-0 self-start"
               >
                 {s.complete ? "Edit" : "Complete"}
               </button>
