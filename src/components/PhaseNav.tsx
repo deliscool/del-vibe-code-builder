@@ -22,7 +22,7 @@ const PhaseNav = ({ currentPhase, completedPhases, onPhaseChange }: PhaseNavProp
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center h-14 gap-1 overflow-x-auto scrollbar-hide">
           <span className="font-heading font-bold text-gold mr-4 text-lg shrink-0">
-            VibeCode
+            Del VibeCode Guide
           </span>
           {phases.map((label, i) => (
             <button
